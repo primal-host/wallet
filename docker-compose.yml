@@ -8,10 +8,13 @@ services:
       - infra
     labels:
       - "traefik.enable=true"
+      # Basic auth middleware
+      - "traefik.http.middlewares.wallet-auth.basicauth.users=primal:$$2y$$05$$c0uQR5.B34.gOIQ9a2Pvi.1zP/dvCcr6Ey.eMGvx07hjzZ8jcyQ7a"
       # Production (HTTPS)
       - "traefik.http.routers.wallet.rule=Host(`wallet.primal.host`)"
       - "traefik.http.routers.wallet.entrypoints=https"
       - "traefik.http.routers.wallet.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.wallet.middlewares=wallet-auth"
       # Production HTTP->HTTPS redirect
       - "traefik.http.routers.wallet-redirect.rule=Host(`wallet.primal.host`)"
       - "traefik.http.routers.wallet-redirect.entrypoints=http"
@@ -19,6 +22,7 @@ services:
       # Local (HTTP)
       - "traefik.http.routers.wallet-local.rule=Host(`wallet.localhost`)"
       - "traefik.http.routers.wallet-local.entrypoints=http"
+      - "traefik.http.routers.wallet-local.middlewares=wallet-auth"
       # Service
       - "traefik.http.services.wallet.loadbalancer.server.port=4322"
     dns:
