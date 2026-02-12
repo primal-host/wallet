@@ -1,0 +1,29 @@
+services:
+  wallet:
+    build: .
+    image: crypto-wallet
+    container_name: crypto-wallet
+    restart: unless-stopped
+    networks:
+      - infra
+    labels:
+      - "traefik.enable=true"
+      # Production (HTTPS)
+      - "traefik.http.routers.wallet.rule=Host(`wallet.primal.host`)"
+      - "traefik.http.routers.wallet.entrypoints=https"
+      - "traefik.http.routers.wallet.tls.certresolver=letsencrypt"
+      # Production HTTP->HTTPS redirect
+      - "traefik.http.routers.wallet-redirect.rule=Host(`wallet.primal.host`)"
+      - "traefik.http.routers.wallet-redirect.entrypoints=http"
+      - "traefik.http.routers.wallet-redirect.middlewares=https-redirect"
+      # Local (HTTP)
+      - "traefik.http.routers.wallet-local.rule=Host(`wallet.localhost`)"
+      - "traefik.http.routers.wallet-local.entrypoints=http"
+      # Service
+      - "traefik.http.services.wallet.loadbalancer.server.port=4322"
+    dns:
+      - 192.168.147.53
+
+networks:
+  infra:
+    external: true

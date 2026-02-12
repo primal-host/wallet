@@ -1,0 +1,20 @@
+[
+  {
+    "id": "avax-mainnet",
+    "name": "Avalanche C-Chain",
+    "url": "https://api.avax.network/ext/bc/C/rpc",
+    "symbol": "AVAX"
+  },
+  {
+    "id": "avax-fuji",
+    "name": "Fuji C-Chain",
+    "url": "https://api.avax-test.network/ext/bc/C/rpc",
+    "symbol": "AVAX"
+  },
+  {
+    "id": "eth-mainnet",
+    "name": "Ethereum",
+    "url": "https://eth.llamarpc.com",
+    "symbol": "ETH"
+  }
+]

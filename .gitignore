@@ -1,0 +1,10 @@
+# Binary
+/wallet
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
